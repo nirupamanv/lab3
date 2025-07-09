@@ -67,11 +67,11 @@
     <div id="output" class="mt-6 hidden"></div>
 
 <script>
-  // 1. Prevent default on form submit
+
   document.getElementById('booking').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // 2. Get form values
+   
     const name = document.querySelector('#name').value;
     const email = document.querySelector('#email').value;
     const gender = document.querySelector('input[name="gender"]:checked')?.value || 'Not selected';
@@ -85,7 +85,7 @@
       .map(cb => cb.value)
       .join(', ') || 'None';
 
-    // 3. Display the output below form
+
     document.getElementById('output').innerHTML = `
       <div class="bg-white p-4 mt-6 rounded shadow text-left max-w-2xl mx-auto">
         <p><strong>Name:</strong> ${name}</p>
@@ -102,7 +102,7 @@
     document.getElementById('output').classList.remove('hidden');
   });
 
-  // 5. Highlight selected radio/checkbox labels
+
   const inputs = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
   inputs.forEach(input => {
     input.addEventListener('change', () => {
