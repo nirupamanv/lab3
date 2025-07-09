@@ -6,6 +6,13 @@
     <title>Document</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<style>
+  .selected {
+    background-color: #dbeafe; /* light blue */
+    border-radius: 4px;
+    padding: 2px 6px;
+  }
+</style>
 <body class="bg-gray-100 text-center p-6">
     <div>
     <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">Hotel Booking</h1> 
@@ -58,6 +65,56 @@
     <button id="submitBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
     </form>
     <div id="output" class="mt-6 hidden"></div>
+
+<script>
+  // 1. Prevent default on form submit
+  document.getElementById('booking').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // 2. Get form values
+    const name = document.querySelector('#name').value;
+    const email = document.querySelector('#email').value;
+    const gender = document.querySelector('input[name="gender"]:checked')?.value || 'Not selected';
+    const phone = document.querySelector('#phone').value;
+    const roomType = document.querySelector('#roomType').value;
+    const numGuests = document.querySelector('#numGuests').value;
+    const checkin = document.querySelector('#checkin').value;
+    const checkout = document.querySelector('#checkout').value;
+
+    const sharing = Array.from(document.querySelectorAll('input[name="guests"]:checked'))
+      .map(cb => cb.value)
+      .join(', ') || 'None';
+
+    // 3. Display the output below form
+    document.getElementById('output').innerHTML = `
+      <div class="bg-white p-4 mt-6 rounded shadow text-left max-w-2xl mx-auto">
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Gender:</strong> ${gender}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Room Type:</strong> ${roomType}</p>
+        <p><strong>Number of Guests:</strong> ${numGuests}</p>
+        <p><strong>Room Sharing:</strong> ${sharing}</p>
+        <p><strong>Check-in:</strong> ${checkin}</p>
+        <p><strong>Check-out:</strong> ${checkout}</p>
+      </div>
+    `;
+    document.getElementById('output').classList.remove('hidden');
+  });
+
+  // 5. Highlight selected radio/checkbox labels
+  const inputs = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+  inputs.forEach(input => {
+    input.addEventListener('change', () => {
+      document.querySelectorAll('label').forEach(label => label.classList.remove('selected'));
+      document.querySelectorAll('input:checked').forEach(i => {
+        if (i.parentElement.tagName === "LABEL") {
+          i.parentElement.classList.add('selected');
+        }
+      });
+    });
+  });
+</script>
 
 </body>
 </html>
